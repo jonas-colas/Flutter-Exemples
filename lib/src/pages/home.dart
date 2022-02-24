@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_examples/src/providers/menu_provider.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -12,17 +13,34 @@ class Home extends StatelessWidget {
   }
 
   Widget _lista() {
-    return ListView(
-      children: _listaItems(),
+    // print(menuProvider.options);
+    // menuProvider.loadData();
+    return FutureBuilder(
+      future: menuProvider.loadData(),
+      initialData: [],
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+        // print(snapshot.data);
+        return ListView(
+          children: _listaItems(snapshot.data),
+        );
+      },
     );
   }
 
-  List<Widget> _listaItems() {
-    return [
-      ListTile(title: Text('Hola the world')),
-      Divider(),
-      ListTile(title: Text('Jesus is the only one way')),
-      Divider(),
-    ];
+  _listaItems(data) {
+    // List<Widget>  //List<dynamic>
+    final List<Widget> options = [];
+    data.forEach((opt) {
+      final widgetTemp = ListTile(
+        title: Text(opt['texto']),
+        leading: Icon(Icons.account_circle, color: Colors.blue),
+        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue),
+        onTap: () {},
+      );
+      options
+        ..add(widgetTemp)
+        ..add(Divider());
+    });
+    return options;
   }
 }
