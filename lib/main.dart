@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_examples/src/pages/alert_page.dart';
+import 'package:flutter_examples/src/pages/avatar_page.dart';
+import 'package:flutter_examples/src/pages/card_page.dart';
 import 'package:flutter_examples/src/pages/home.dart';
 // import 'package:flutter_examples/src/pages/home_temp.dart';
 
@@ -10,11 +13,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Componenentes App',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.purple,
       ),
       debugShowCheckedModeBanner: false,
-      // home: HomeTemp(),
-      home: Home(),
+      // home: Home(),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => Home(),
+        'alert': (BuildContext context) => AlertPage(),
+        'avatar': (BuildContext context) => AvatarPage(),
+        'card': (BuildContext context) => CardPage(),
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        print('ruta llamada ${settings.name}');
+        return null;
+      },
     );
   }
 }
